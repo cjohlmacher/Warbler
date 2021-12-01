@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 
 from forms import UserAddForm, LoginForm, UserEditForm, MessageForm
 from models import db, connect_db, User, Message, Follows
+import pdb
 
 CURR_USER_KEY = "curr_user"
 
@@ -179,6 +180,15 @@ def users_followers(user_id):
     user = User.query.get_or_404(user_id)
     return render_template('users/followers.html', user=user)
 
+@app.route('/users/<int:user_id>/likes')
+def users_likes(user_id):
+    """Show list of liked messages for this user."""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect('/')
+    user = User.query.get_or_404(user_id)
+    return render_template('users/likes.html',user=user)
 
 @app.route('/users/follow/<int:follow_id>', methods=['POST'])
 def add_follow(follow_id):
@@ -209,6 +219,20 @@ def stop_following(follow_id):
 
     return redirect(f"/users/{g.user.id}/following")
 
+@app.route('/users/toggle_like/<int:like_id>', methods=['POST'])
+def add_like(like_id):
+    """Toggle like for the currently-logged-in user."""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect('/')
+    liked_message = Message.query.get(like_id)
+    if liked_message in g.user.likes:
+        g.user.likes.remove(liked_message)
+    else:
+        g.user.likes.append(liked_message)
+    db.session.commit()
+    return redirect(f"/")
 
 @app.route('/users/profile', methods=["GET", "POST"])
 def profile():
