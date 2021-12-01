@@ -223,7 +223,6 @@ def profile():
         if user:
             user.username = form.username.data
             user.email = form.email.data
-            user.password = user.password
             user.image_url = form.image_url.data
             user.header_image_url = form.header_image_url.data
             user.bio = form.bio.data
@@ -232,7 +231,7 @@ def profile():
             return redirect(f"/users/{user.id}")
         flash('Incorrect password.', "danger")
         return redirect('/users/profile')
-    return render_template('users/edit.html',form=form)
+    return render_template('users/edit.html',form=form, user=g.user)
 
 
 @app.route('/users/delete', methods=["POST"])
