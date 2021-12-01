@@ -158,6 +158,11 @@ nav + .container {
   margin-top: 100px;
 }
 
+#profile-header-image {
+  display: block;
+  width: 100%;
+}
+
 #profile-image,
 #profile-avatar {
   border-radius: 100%;
@@ -200,6 +205,7 @@ nav + .container {
   height: 360px;
   margin-top: -16px;
   opacity: 0.7;
+  overflow: hidden;
   background-size: cover;
   background-position: top center;
 }
