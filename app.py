@@ -76,6 +76,8 @@ def signup():
                 password=form.password.data,
                 email=form.email.data,
                 image_url=form.image_url.data or User.image_url.default.arg,
+                header_image_url=form.header_image_url.data or User.header_image_url.default.arg,
+                bio=form.bio.data or User.bio.default.arg,
             )
             db.session.commit()
 
@@ -317,6 +319,9 @@ def messages_destroy(message_id):
         return redirect("/")
 
     msg = Message.query.get(message_id)
+    if msg.user_id != g.user.id:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
     db.session.delete(msg)
     db.session.commit()
 

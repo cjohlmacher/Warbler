@@ -1,0 +1,4 @@
+1) In messages/<message_id>/delete route:  A user can delete any message, not just their own.
+2) In Models.py for Likes, had Unique constraint on message, but multiple user's should be allowed to like the same message.
+3) There is no field for header_image_url or Bio in signup form
+4) In Models.py for Users, on delete of user it does not cascade to Messages

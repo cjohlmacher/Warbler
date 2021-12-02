@@ -82,6 +82,7 @@ class User(db.Model):
 
     bio = db.Column(
         db.Text,
+        default=""
     )
 
     location = db.Column(
@@ -93,7 +94,7 @@ class User(db.Model):
         nullable=False,
     )
 
-    messages = db.relationship('Message')
+    messages = db.relationship('Message', cascade="all,delete")
 
     followers = db.relationship(
         "User",
@@ -130,7 +131,7 @@ class User(db.Model):
         return len(found_user_list) == 1
 
     @classmethod
-    def signup(cls, username, email, password, image_url):
+    def signup(cls, username, email, password, image_url, header_image_url,bio):
         """Sign up user.
 
         Hashes password and adds user to system.
@@ -143,6 +144,8 @@ class User(db.Model):
             email=email,
             password=hashed_pwd,
             image_url=image_url,
+            header_image_url=header_image_url,
+            bio=bio
         )
 
         db.session.add(user)
