@@ -38,16 +38,16 @@
       </li>
       {% endif %}
       {% if not g.user %}
-      <li><a href="/signup">Sign up</a></li>
-      <li><a href="/login">Log in</a></li>
+      <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+      <li><a href="{{ url_for('login') }}">Log in</a></li>
       {% else %}
       <li>
-        <a href="/users/{{ g.user.id }}">
+        <a href="{{ url_for('users_show',user_id=g.user.id) }}">
           <img src="{{ g.user.image_url }}" alt="{{ g.user.username }}">
         </a>
       </li>
-      <li><a href="/messages/new">New Message</a></li>
-      <li><a href="/logout">Log out</a></li>
+      <li><a href="{{ url_for('messages_add') }}">New Message</a></li>
+      <li><a href="{{ url_for('logout') }}">Log out</a></li>
       {% endif %}
     </ul>
   </div>

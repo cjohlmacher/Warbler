@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from forms import UserAddForm, LoginForm, UserEditForm, MessageForm
 from models import db, connect_db, User, Message, Follows
 from functools import wraps
+import pdb
 
 CURR_USER_KEY = "curr_user"
 
@@ -219,14 +220,15 @@ def stop_following(follow_id):
 @redirect_if_missing
 def add_like(like_id):
     """Toggle like for the currently-logged-in user."""
-
     liked_message = Message.query.get(like_id)
     if liked_message in g.user.likes:
         g.user.likes.remove(liked_message)
     else:
         g.user.likes.append(liked_message)
     db.session.commit()
-    return redirect(f"/")
+    if request.referrer:
+        return redirect(f"{request.referrer}")
+    return redirect('/')
 
 @app.route('/users/profile', methods=["GET", "POST"])
 @redirect_if_missing

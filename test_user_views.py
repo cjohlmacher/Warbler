@@ -411,6 +411,7 @@ class UserViewTestCase(TestCase):
             resp = c.post(f"/users/toggle_like/{message3.id}", data={}, follow_redirects=True)
             html = resp.get_data(as_text=True)
 
+            print('***',resp.status_code,'***')
             self.assertEqual(resp.status_code, 200)
 
             testuser1 = User.query.filter_by(username="testuser1").first()

@@ -14,31 +14,31 @@
           <li class="stat">
             <p class="small">Messages</p>
             <h4>
-              <a href="/users/{{ user.id }}">{{ user.messages | length }}</a>
+              <a href="{{ url_for('users_show',user_id=user.id) }}">{{ user.messages | length }}</a>
             </h4>
           </li>
           <li class="stat">
             <p class="small">Following</p>
             <h4>
-              <a href="/users/{{ user.id }}/following">{{ user.following | length }}</a>
+              <a href="{{ url_for('show_following',user_id=user.id) }}">{{ user.following | length }}</a>
             </h4>
           </li>
           <li class="stat">
             <p class="small">Followers</p>
             <h4>
-              <a href="/users/{{ user.id }}/followers">{{ user.followers | length }}</a>
+              <a href="{{ url_for('users_followers',user_id=user.id) }}">{{ user.followers | length }}</a>
             </h4>
           </li>
           <li class="stat">
             <p class="small">Likes</p>
             <h4>
-              <a href="/users/{{ user.id }}/likes">{{ user.likes | length }}</a>
+              <a href="{{ url_for('users_likes',user_id=user.id) }}">{{ user.likes | length }}</a>
             </h4>
           </li>
           <div class="ml-auto">
             {% if g.user.id == user.id %}
-              <a href="/users/profile" class="btn btn-outline-secondary">Edit Profile</a>
-              <form method="POST" action="/users/delete" class="form-inline">
+              <a href="{{ url_for('profile') }}" class="btn btn-outline-secondary">Edit Profile</a>
+              <form method="POST" action="{{ url_for('delete_user') }}" class="form-inline">
                 <button class="btn btn-outline-danger ml-2">Delete Profile</button>
               </form>
             {% elif g.user %}
